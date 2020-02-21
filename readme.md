@@ -1,4 +1,10 @@
 
+## dependencies on mac
+
+```
+brew install librdkafka pkg-config.
+```
+
 ## Run compose
 
 ```
@@ -80,5 +86,6 @@ For use cases where message processing time varies unpredictably, neither of the
 ## Resources
 
 - [kafka-single-node-client](https://docs.confluent.io/5.0.0/installation/docker/docs/installation/single-node-client.html)
+- [confluent kafka go](https://github.com/confluentinc/confluent-kafka-go)
 - [Kafka Consumer Doc](https://kafka.apache.org/10/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html)
 - [hadoop-in-docker](https://clubhouse.io/developer-how-to/how-to-set-up-a-hadoop-cluster-in-docker/)
