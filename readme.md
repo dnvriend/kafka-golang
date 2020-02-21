@@ -1,9 +1,29 @@
+# kafka-golang
+A small study project on kafka (and HDFS) with golang
 
 ## dependencies on mac
 
 ```
 brew install librdkafka pkg-config.
 ```
+
+## Creating a new go module
+
+```
+go mod init com.github.dnvriend/kafka-golang
+```
+
+## Building binaries
+
+```
+go build produce.go
+go build consume.go
+```
+
+## next steps
+
+- integrate with cobra
+- create two commands, consume and produce
 
 ## Run compose
 
@@ -60,19 +80,6 @@ bash -c "seq 42 | kafka-console-producer --request-required-acks 1 \
 kafka-console-consumer --bootstrap-server kafka:9092 --topic foo --from-beginning --max-messages 42
 ```
 
-## Creating a new go module
-
-```
-go mod init com.github.dnvriend/kafka-golang
-```
-
-## Building binaries
-
-```
-go build produce.go
-go build consume.go
-```
-
 ## Kafka client poll()
 After subscribing to a set of topics, the consumer will automatically join the group when poll(long) is invoked. The poll API is designed to ensure consumer liveness. As long as you continue to call poll, the consumer will stay in the group and continue to receive messages from the partitions it was assigned. Underneath the covers, the consumer sends periodic heartbeats to the server. If the consumer crashes or is unable to send heartbeats for a duration of session.timeout.ms, then the consumer will be considered dead and its partitions will be reassigned.
 It is also possible that the consumer could encounter a "livelock" situation where it is continuing to send heartbeats, but no progress is being made. To prevent the consumer from holding onto its partitions indefinitely in this case, we provide a liveness detection mechanism using the max.poll.interval.ms setting. Basically if you don't call poll at least as frequently as the configured max interval, then the client will proactively leave the group so that another consumer can take over its partitions. When this happens, you may see an offset commit failure (as indicated by a CommitFailedException thrown from a call to commitSync()). This is a safety mechanism which guarantees that only active members of the group are able to commit offsets. So to stay in the group, you must continue to call poll.
@@ -88,4 +95,6 @@ For use cases where message processing time varies unpredictably, neither of the
 - [kafka-single-node-client](https://docs.confluent.io/5.0.0/installation/docker/docs/installation/single-node-client.html)
 - [confluent kafka go](https://github.com/confluentinc/confluent-kafka-go)
 - [Kafka Consumer Doc](https://kafka.apache.org/10/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html)
+- [native go hdfs client](https://github.com/colinmarc/hdfs)
 - [hadoop-in-docker](https://clubhouse.io/developer-how-to/how-to-set-up-a-hadoop-cluster-in-docker/)
+- [cobra - golang CLI](https://github.com/spf13/cobra)
